@@ -5,7 +5,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 const Dashboard = ({ files, setIsModalOpen, setEditingFile, setViewingFile }) => {
   const totalFiles = files.length;
-  const uniqueBoxes = new Set(files.map(f => f.boxNumber)).size;
+  const uniqueBoxes = 33;
   
   // Calculate files added this year
   const thisYear = files.filter(f => {
