@@ -24,7 +24,7 @@ const DaftarArsip = ({
           className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition flex items-center gap-2 font-medium"
         >
           <Plus className="w-5 h-5" />
-          Tambah Berkas Baru
+          Tambah Berkas Ber
         </button>
       </div>
 
@@ -48,14 +48,14 @@ const DaftarArsip = ({
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nama UPTD</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Tanggal Dimasukkan</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Jumlah Berkas</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nomor Box</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Index Lokasi Berkas</th>
                   <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">Tindakan</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {filteredFiles.map(file => (
                   <tr key={file._id} className="hover:bg-gray-50 transition">
-                    <td className="px-6 py-4 text-sm text-gray-800 font-medium">{file.fileName}</td>
+                    <td className="px-6 py-4 text-sm  text-gray-800 font-medium">{file.fileName}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{file.uptdName}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{file.inputDate}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{file.fileAmount}</td>
