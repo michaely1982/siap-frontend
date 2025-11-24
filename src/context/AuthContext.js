@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export const AuthContext = createContext();
 
-// Use environment variable for API URL
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 export const AuthProvider = ({ children }) => {
@@ -11,7 +10,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
 
-  // Set axios default headers
   useEffect(() => {
     if (token) {
       axios.defaults.headers.common['x-auth-token'] = token;
@@ -21,7 +19,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  // Load user
   const loadUser = async () => {
     try {
       const res = await axios.get(`${API_BASE_URL}/api/auth/user`);
@@ -34,7 +31,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Login - Updated to use NIP instead of username
   const login = async (nip, password) => {
     try {
       const res = await axios.post(`${API_BASE_URL}/api/auth/login`, {
@@ -42,13 +38,24 @@ export const AuthProvider = ({ children }) => {
         password
       });
       
-      localStorage.setItem('token', res.data.token);
-      setToken(res.data.token);
-      setUser(res.data.user);
-      axios.defaults.headers.common['x-auth-token'] = res.data.token;
+      // Check if user is verified
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+        setToken(res.data.token);
+        setUser(res.data.user);
+        axios.defaults.headers.common['x-auth-token'] = res.data.token;
+        return { success: true };
+      }
       
-      return { success: true };
+      return { success: false, message: 'Login failed' };
     } catch (err) {
+      // Handle verification error
+      if (err.response?.status === 403) {
+        return { 
+          success: false, 
+          message: err.response.data.message || 'Your account is pending admin verification'
+        };
+      }
       return { 
         success: false, 
         message: err.response?.data?.message || 'Login failed' 
@@ -56,17 +63,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Register
   const register = async (userData) => {
     try {
       const res = await axios.post(`${API_BASE_URL}/api/auth/register`, userData);
       
-      localStorage.setItem('token', res.data.token);
-      setToken(res.data.token);
-      setUser(res.data.user);
-      axios.defaults.headers.common['x-auth-token'] = res.data.token;
-      
-      return { success: true };
+      // Registration successful but needs verification
+      // Do NOT log user in automatically
+      return { 
+        success: true,
+        message: res.data.message || 'Registration successful'
+      };
     } catch (err) {
       return { 
         success: false, 
@@ -75,7 +81,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout
   const logout = () => {
     localStorage.removeItem('token');
     setToken(null);

@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Use environment variable for production, fallback to localhost for development
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 const API_URL = `${API_BASE_URL}/api/files`;
@@ -75,5 +74,19 @@ export const updateUser = async (id, userData) => {
 export const deleteUser = async (id) => {
   setAuthToken();
   const response = await axios.delete(`${USERS_URL}/${id}`);
+  return response.data;
+};
+
+// Verify user (Admin only)
+export const verifyUser = async (id) => {
+  setAuthToken();
+  const response = await axios.put(`${USERS_URL}/${id}/verify`);
+  return response.data;
+};
+
+// Unverify user (Admin only)
+export const unverifyUser = async (id) => {
+  setAuthToken();
+  const response = await axios.put(`${USERS_URL}/${id}/unverify`);
   return response.data;
 };
