@@ -45,7 +45,7 @@ const DaftarArsip = ({
               <thead className="bg-gray-100 border-b">
                 <tr>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nama File</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nama UPTD</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nama OPD</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Tanggal Dimasukkan</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Jumlah Berkas</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Index Lokasi Berkas</th>
